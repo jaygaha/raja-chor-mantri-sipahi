@@ -18,6 +18,9 @@ class Player:
         self.is_bot = is_bot
         self.score = 0
         self.role = ""
+        # Strategies: 'random', 'tracker', 'hunter'
+        self.strategy = "random" 
+        self.chor_count = 0  # Number of times this player has been Chor
 
 def get_player_names():
     print("WELCOME TO RAJA CHOR MANTRI SIPAHI")
@@ -43,13 +46,64 @@ def get_player_names():
     
     # Fill the rest with bots
     bots_needed = 4 - num
+    strategies = ["random", "tracker", "hunter"]
+    
     for i in range(bots_needed):
         bot_name = "Bot " + str(i + 1)
-        print("Adding " + bot_name)
+        
+        # Assign a random personality to the bot
+        bot_strategy = random.choice(strategies)
+        
+        print("Adding " + bot_name + " (" + bot_strategy + " personality)")
+        
         new_player = Player(bot_name, is_bot=True)
+        new_player.strategy = bot_strategy
         players_list.append(new_player)
 
     return players_list
+
+def get_bot_guess(sipahi_bot, options):
+    """
+    Decide who to guess based on the bot's strategy.
+    
+    sipahi_bot: The Player object who is guessing
+    options: List of Player objects who could be the Chor
+    """
+    strategy = sipahi_bot.strategy
+    print(sipahi_bot.name + " is thinking... (Strategy: " + strategy + ")")
+    
+    guessed_player = None
+    
+    if strategy == "tracker":
+        # Tracker Strategy: Guess the person who has been Chor the LEAST often.
+        # Logic: "They haven't been Chor in a while, it must be their turn!" (Gambler's Fallacy)
+        
+        # Sort options by chor_count (lowest first)
+        # We start with the first person as the best candidate
+        best_candidate = options[0]
+        for p in options:
+            if p.chor_count < best_candidate.chor_count:
+                best_candidate = p
+        
+        guessed_player = best_candidate
+        
+    elif strategy == "hunter":
+        # Hunter Strategy: Guess the person with the HIGHEST score.
+        # Logic: "I want to take down the leader!"
+        
+        # Sort options by score (highest first)
+        best_candidate = options[0]
+        for p in options:
+            if p.score > best_candidate.score:
+                best_candidate = p
+                
+        guessed_player = best_candidate
+        
+    else:
+        # Random Strategy (or fallback)
+        guessed_player = random.choice(options)
+        
+    return guessed_player
 
 def play_game():
     players = get_player_names()
@@ -109,11 +163,11 @@ def play_game():
         
         guessed_correctly = False
         
-        # If Sipahi is a bot, it guesses randomly
+        # If Sipahi is a bot, uses its strategy
         if sipahi.is_bot:
-            print("Sipahi is thinking...")
-            guessed_player = random.choice(options)
+            guessed_player = get_bot_guess(sipahi, options)
             print("Sipahi guesses: " + guessed_player.name)
+            
             if guessed_player == chor:
                 guessed_correctly = True
         else:
@@ -141,6 +195,9 @@ def play_game():
         print("\nRELVEALING ROLES:")
         for p in players:
             print(p.name + " was " + p.role)
+            # Update chor_count history for 'tracker' bots
+            if p.role == "Chor":
+                p.chor_count += 1
             
         if guessed_correctly:
             print("\nCORRECT! Sipahi found the Chor.")
