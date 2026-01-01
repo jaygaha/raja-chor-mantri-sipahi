@@ -1,8 +1,54 @@
 # Raja Chor Mantri Sipahi
 
-A simple Python implementation of the traditional role-playing game "Raja Chor Mantri Sipahi" (King, Minister, Thief, Police). We used to play this game when I was a child. I remember it was a lot of fun.
+A simple **Python** implementation of the traditional role-playing game "Raja Chor Mantri Sipahi" (King, Minister, Thief, Police). We used to play this game when I was a child. I remember it was a lot of fun.
 
-This project is designed for learning Game Development in Python, keeping the code beginner-friendly without complex frameworks.
+> **Note**: This project starts as a **Beginner** level project and evolves into an **Intermediate** level project in Phase 3.
+
+## Phase 1 & 2: Beginner friendly
+
+Initially, this project was designed for learning Game Development in Python without complex frameworks.
+- Single file logic.
+- Simple synchronous code.
+- Check `main.py` for the code.
+
+## Phase 3: Intermediate upgrade (`WebSocket multiplayer`)
+
+In Phase 3, we leveled up the complexity to introduce **Distributed System** concepts!
+- **Client-Server Architecture**: The game is split into a Server (Game Master) and Clients (Players).
+- **Asynchronous Programming**: Uses Python's `asyncio` for handling multiple players at once.
+- **WebSockets**: Real-time communication between server and clients.
+- **Bot Integration**: The server automatically fills empty slots with "Smart Bots" if human players are missing.
+
+### Project Structure
+```
+raja_chor_multiplayer/
+├── server.py            # Entry point for the Server
+├── client.py            # Entry point for the Client
+├── game/                # Shared Logic & Classes
+│   ├── __init__.py
+│   ├── engine.py        # The State Machine (Scores, logic)
+├── requirements.txt     # Dependencies (websockets)
+├── README.md
+└── main.py              # Phase 1 & 2 code
+```
+
+### Installation
+```bash
+git clone https://github.com/jaygaha/raja_chor_matri_sipahi.git
+cd raja_chor_matri_sipahi
+# Activate virtual environment
+python -m venv .venv
+source .venv/bin/activate # On Linux/Mac
+# OR
+.venv\Scripts\activate # On Windows
+```
+
+### Prerequisites (Phase 3)
+To play the multiplayer version, you need to install the dependencies:
+```bash
+pip install -r requirements.txt
+```
+*(Requires `websockets` library)*
 
 ## Roles & Points
 - **Raja** (King): 1000 Points
@@ -10,45 +56,47 @@ This project is designed for learning Game Development in Python, keeping the co
 - **Sipahi** (Police): 500 Points
 - **Chor** (Thief): 0 Points
 
-## Phase 2: Smarter Bot AI
+## Intelligent bots
+The bots in this game have personalities!
+1.  **Tracker Bot**: Tracks history (Gambler's Fallacy). "He hasn't been chor in a while!"
+2.  **Hunter Bot**: Targets the leader. "I need to take down the winner!"
+3.  **Random Bot**: Just guesses randomly.
 
-In this phase, we added "Personalities" to the Bots to make them feel more human and intelligent. Instead of just guessing randomly, they now use strategies!
+## How to Play (Multiplayer)
 
-### The Strategies
-When a Bot joins the game, it is assigned one of these personalities:
-
-1.  **Tracker Bot (The "Gambler")**
-    *   **Logic:** "This person hasn't been the Chor in a long time... surely it's their turn!"
-    *   **How it works:** Tracks how many times each player has been Chor. It guesses the player who has been Chor the *least* often.
-2.  **Hunter Bot (The "Competitor")**
-    *   **Logic:** "I need to stop the winning player!"
-    *   **How it works:** It checks the scoreboard and guesses the player with the *highest* current score.
-3.  **Random Bot (The "Wildcard")**
-    *   **Logic:** "I have no idea, picking randomly!"
-    *   **How it works:** Picks a suspect purely at random.
-
-## How to Play
-1. The game assigns roles randomly.
-2. **Sipahi** has to guess who the **Chor** is.
-3. If Sipahi guesses correctly, they get 500 points.
-4. If Sipahi guesses incorrectly, the Chor gets the Sipahi's points (500), and Sipahi gets 0!
-
-## Installation
+### 1. Start the Server
+The Server acts as the Game Master. It handles the specific game rules.
 ```bash
-git clone git@github.com:jaygaha/raja-chor-mantri-sipahi.git
-cd raja-chor-mantri-sipahi
+python server.py
 ```
 
-## How to Run
+### 2. Start Clients
+Open new terminal windows for each player and run:
 ```bash
-python main.py
+python client.py
 ```
+
+### 3. Host Setup
+The **First Player** to join becomes the **Host**.
+- The Host configures the game:
+  - **Number of Humans** (1-4).
+  - **Number of Rounds** (3-20).
+- If you start a game with "1 Human", the server fills the other 3 slots with Bots immediately!
 
 ## Future Next Steps
 - [x] **Phase 1:** Core Game Logic
 - [x] **Phase 2:** Smarter Bot AI (Personalities)
-- [ ] **Phase 3:** WebSocket server for multiplayer
+- [x] **Phase 3:** WebSocket server for multiplayer
 - [ ] **Phase 4:** Web frontend interface
+
+## Nice to have
+- [ ] Room Management (Multiple rooms)
+- [ ] Unit Tests
+- [ ] Persistent Storage (SQLite Database)
+- [ ] Documentation
+
+## Contributing
+Feedback is welcome! Please open an issue or submit a pull request.
 
 ## Credits
 Based on the traditional game "Raja Mantri Chor Sipahi".
