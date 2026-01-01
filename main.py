@@ -1,3 +1,6 @@
+"""
+Raja Chor Mantri Sipahi Basic implementation
+"""
 import random
 import os
 
