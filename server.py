@@ -337,13 +337,19 @@ class GameServer:
                         future.set_exception(Exception("Client Disconnected"))
 
 async def main():
-    print(f"Server starting on port {PORT}...")
-    async with websockets.serve(self.handler if 'self' in locals() else GameServer().handler, "localhost", PORT):
+    """Main server entry point"""
+    server = GameServer()
+    print(f"Raja Mantri Chor Sipahi Server")
+    print(f"Starting on port {PORT}...")
+    print(f"Connect via ws://localhost:{PORT}")
+
+    async with websockets.serve(server.handler, "localhost", PORT):
+        print(f"Server running! Waiting for players...")
         await asyncio.Future()  # run forever
 
 if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nServer stopping...")
-
+        print("\n\nServer stopping...")
+        print("Goodbye!\n")

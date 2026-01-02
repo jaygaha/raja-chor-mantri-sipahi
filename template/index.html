@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raja Mantri Chor Sipahi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --color-raja: #D4AF37;
+            --color-mantri: #9B59B6;
+            --color-sipahi: #6b93ff;
+            --color-chor: #FF6B6B;
+            --color-bg: #0A0E27;
+            --color-bg-card: #1A1F3A;
+            --color-text: #F8F9FA;
+            --color-text-dim: #A0AEC0;
+            --color-accent: #FF6B6B;
+            --color-success: #51CF66;
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #0A0E27 0%, #1A1F3A 50%, #2C1A3A 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Decorative background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(155, 89, 182, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(231, 76, 60, 0.1) 0%, transparent 50%);
+            animation: floating 30s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -30px) rotate(5deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(-5deg);
+            }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--color-raja), var(--color-mantri), var(--color-sipahi));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--color-text-dim);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            animation: fadeIn 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Left Column - Game Area */
+        .left-column {
+            min-height: 500px;
+        }
+
+        /* Connection Status */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-bg-card);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-text-dim);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-indicator.connected {
+            background: var(--color-success);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Right Column - Console & Scoreboard */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            max-height: calc(100vh - 4rem);
+        }
+
+        /* Console Panel */
+        .console-panel {
+            background: var(--color-bg-card);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            max-height: 400px;
+        }
+
+        .console-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .console-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-raja);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .console-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            min-height: 200px;
+        }
+
+        /* Scoreboard Panel */
+        .scoreboard-panel {
+            background: var(--color-bg-card);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .scoreboard-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scoreboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-raja);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scoreboard-body {
+            padding: 1rem;
+        }
+
+        .scoreboard-empty {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--color-text-dim);
+            font-style: italic;
+        }
+
+        /* Main Game Area */
+        .game-area-content {
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-bg-card);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--color-raja);
+        }
+
+        /* Role Card */
+        .role-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--color-bg-card), rgba(155, 89, 182, 0.2));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .role-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            position: relative;
+            z-index: 1;
+            animation: roleReveal 1s ease-out;
+        }
+
+        @keyframes roleReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateY(90deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotateY(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .role-raja {
+            color: var(--color-raja);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .role-mantri {
+            color: var(--color-mantri);
+            text-shadow: 0 0 30px rgba(155, 89, 182, 0.5);
+        }
+
+        .role-sipahi {
+            color: var(--color-sipahi);
+            text-shadow: 0 0 30px rgba(231, 76, 60, 0.5);
+        }
+
+        .role-chor {
+            color: var(--color-chor);
+            text-shadow: 0 0 30px rgba(44, 62, 80, 0.5);
+        }
+
+        .role-secret {
+            font-size: 0.9rem;
+            color: var(--color-text-dim);
+            margin-top: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Input Form */
+        .input-form {
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            font-family: 'DM Sans', sans-serif;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            color: var(--color-text);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--color-raja);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-raja), #B8860B);
+            color: var(--color-bg);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .option-btn {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            color: var(--color-text);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-raja), var(--color-mantri));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--color-raja);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .option-btn:hover::after {
+            opacity: 0.1;
+        }
+
+        .option-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Info Messages */
+        .info-message {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--color-raja);
+            animation: slideInLeft 0.4s ease-out;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .info-message.error {
+            border-left-color: var(--color-accent);
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .info-message.success {
+            border-left-color: var(--color-success);
+            background: rgba(81, 207, 102, 0.1);
+        }
+
+        /* Round Header */
+        .round-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(155, 89, 182, 0.2));
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            animation: roundStart 1s ease-out;
+        }
+
+        @keyframes roundStart {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) rotateX(20deg);
+            }
+
+            50% {
+                transform: scale(1.05) rotateX(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+            }
+        }
+
+        .round-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--color-raja), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Scoreboard */
+        .score-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            border-left: 3px solid var(--color-raja);
+            transition: all 0.3s ease;
+            animation: scoreReveal 0.5s ease-out backwards;
+            margin-bottom: 0.75rem;
+        }
+
+        .score-entry:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .score-entry:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .score-entry:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .score-entry:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes scoreReveal {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .score-entry:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(8px);
+        }
+
+        .score-name {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .score-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-raja);
+        }
+
+        .score-entry.winner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+            border-left-color: var(--color-raja);
+            border-left-width: 5px;
+        }
+
+        .score-rank {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* New Game Button */
+        .new-game-container {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .btn-new-game {
+            padding: 1.25rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, var(--color-success), #3fa34d);
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 10px 30px rgba(81, 207, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: newGamePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes newGamePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .btn-new-game::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-new-game:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(81, 207, 102, 0.5);
+        }
+
+        .btn-new-game:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-new-game:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn-new-game span {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Result Display */
+        .result-display {
+            text-align: center;
+            padding: 3rem 2rem;
+            animation: resultReveal 1s ease-out;
+        }
+
+        @keyframes resultReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+
+            60% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .result-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .result-correct {
+            color: var(--color-success);
+            text-shadow: 0 0 30px rgba(81, 207, 102, 0.5);
+        }
+
+        .result-wrong {
+            color: var(--color-accent);
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Roles Reveal */
+        .roles-reveal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .role-reveal-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            text-align: center;
+            animation: roleItemReveal 0.6s ease-out backwards;
+        }
+
+        .role-reveal-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .role-reveal-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .role-reveal-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .role-reveal-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes roleItemReveal {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+        }
+
+        .role-reveal-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-reveal-role {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--color-raja);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-raja);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8860B;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+                position: static;
+                max-height: none;
+            }
+
+            .console-panel {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .main-layout {
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .role-name {
+                font-size: 2.5rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .console-panel,
+            .scoreboard-panel {
+                border-radius: 1rem;
+            }
+
+            .btn-new-game {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">Raja Mantri Chor Sipahi</h1>
+            <p class="subtitle">The Classic Strategy Game</p>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Left Column: Game Area -->
+            <div class="left-column">
+                <!-- Connection Status -->
+                <div class="status-bar">
+                    <div class="status-indicator" id="statusIndicator"></div>
+                    <span id="statusText">Connecting to server...</span>
+                </div>
+
+                <!-- Game Content -->
+                <div id="gameArea">
+                    <!-- Dynamic game content will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Right Column: Console & Scoreboard -->
+            <div class="right-column">
+                <!-- Console Panel -->
+                <div class="console-panel">
+                    <div class="console-header">
+                        <div class="console-title">
+                            <span>Live Console</span>
+                        </div>
+                    </div>
+                    <div class="console-body" id="consoleLog">
+                        <!-- Console messages will appear here -->
+                    </div>
+                </div>
+
+                <!-- Scoreboard Panel -->
+                <div class="scoreboard-panel">
+                    <div class="scoreboard-header">
+                        <div class="scoreboard-title">
+                            <span>Scoreboard</span>
+                        </div>
+                    </div>
+                    <div class="scoreboard-body" id="liveScoreboard">
+                        <div class="scoreboard-empty">Waiting for game to start...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WebSocket connection
+        let ws = null;
+        const SERVER_URL = 'ws://localhost:8765';
+
+        // DOM elements
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        const consoleLog = document.getElementById('consoleLog');
+        const gameArea = document.getElementById('gameArea');
+        const liveScoreboard = document.getElementById('liveScoreboard');
+
+        // State
+        let playerName = '';
+        let currentRole = '';
+        let currentScores = {};
+        let gameEnded = false;
+
+        // Connect to server
+        function connect() {
+            ws = new WebSocket(SERVER_URL);
+
+            ws.onopen = () => {
+                statusIndicator.classList.add('connected');
+                statusText.textContent = 'Connected to server';
+                addConsoleMessage('Connected to game server!', 'success');
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleMessage(data);
+            };
+
+            ws.onerror = (error) => {
+                addConsoleMessage('Connection error. Please check if server is running.', 'error');
+                statusText.textContent = 'Connection error';
+            };
+
+            ws.onclose = () => {
+                statusIndicator.classList.remove('connected');
+                statusText.textContent = 'Disconnected from server';
+                addConsoleMessage('Disconnected from server', 'error');
+            };
+        }
+
+        // Handle incoming messages
+        function handleMessage(data) {
+            const msgType = data.type;
+
+            switch (msgType) {
+                case 'input_request':
+                    handleInputRequest(data);
+                    break;
+                case 'info':
+                    addConsoleMessage(data.message);
+                    break;
+                case 'round_start':
+                    handleRoundStart(data);
+                    break;
+                case 'role_reveal':
+                    handleRoleReveal(data);
+                    break;
+                case 'sipahi_turn':
+                    handleSipahiTurn(data);
+                    break;
+                case 'round_end':
+                    handleRoundEnd(data);
+                    break;
+                case 'scoreboard':
+                    handleScoreboard(data);
+                    break;
+                case 'game_over':
+                    handleGameOver(data);
+                    break;
+                case 'error':
+                    addConsoleMessage(`Error: ${data.message}`, 'error');
+                    break;
+            }
+        }
+
+        // Add console message to log
+        function addConsoleMessage(message, type = 'info') {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'info-message';
+            if (type === 'error') msgDiv.classList.add('error');
+            if (type === 'success') msgDiv.classList.add('success');
+
+            const timestamp = new Date().toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            msgDiv.innerHTML = `<span style="opacity: 0.6; font-size: 0.85em;">[${timestamp}]</span> ${message}`;
+            consoleLog.appendChild(msgDiv);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+
+            // Keep only last 50 messages
+            while (consoleLog.children.length > 50) {
+                consoleLog.removeChild(consoleLog.firstChild);
+            }
+        }
+
+        // Update live scoreboard
+        function updateLiveScoreboard(scores) {
+            if (!scores || Object.keys(scores).length === 0) {
+                liveScoreboard.innerHTML = '<div class="scoreboard-empty">Waiting for game to start...</div>';
+                return;
+            }
+
+            currentScores = scores;
+            const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+            liveScoreboard.innerHTML = '';
+            sortedScores.forEach(([name, score], index) => {
+                const scoreEntry = document.createElement('div');
+                scoreEntry.className = 'score-entry';
+                if (index === 0) scoreEntry.classList.add('winner');
+
+                let medal = '';
+                if (index === 0) medal = '🥇';
+                else if (index === 1) medal = '🥈';
+                else if (index === 2) medal = '🥉';
+                else medal = `<span class="score-rank">#${index + 1}</span>`;
+
+                scoreEntry.innerHTML = `
+                    <span class="score-name">${medal} ${name}</span>
+                    <span class="score-value">${score}</span>
+                `;
+                liveScoreboard.appendChild(scoreEntry);
+            });
+        }
+
+        // Handle input requests
+        function handleInputRequest(data) {
+            const prompt = data.prompt;
+            gameArea.innerHTML = '';
+
+            if (prompt === 'name') {
+                showNameInput();
+            } else if (prompt === 'choose_chor') {
+                showChoiceInput(data);
+            } else if (prompt === 'number_input') {
+                showNumberInput(data);
+            }
+        }
+
+        // Show name input
+        function showNameInput() {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h2 class="card-title">Welcome!</h2>
+                <div class="input-form">
+                    <label class="input-label">Enter your name to join the game:</label>
+                    <input type="text" class="input-field" id="nameInput" placeholder="Your name" autofocus>
+                    <br><br>
+                    <button class="btn btn-primary" onclick="submitName()">
+                        <span>Join Game</span>
+                    </button>
+                </div>
+            `;
+            gameArea.appendChild(card);
+
+            document.getElementById('nameInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') submitName();
+            });
+        }
+
+        // Submit name
+        function submitName() {
+            const input = document.getElementById('nameInput');
+            playerName = input.value.trim();
+
+            if (!playerName) {
+                addConsoleMessage('Please enter a valid name', 'error');
+                return;
+            }
+
+            ws.send(JSON.stringify({ type: 'response', value: playerName }));
+            gameArea.innerHTML = '<div class="card"><p style="text-align: center;">Waiting for players... <span class="loading"></span></p></div>';
+            addConsoleMessage(`👤 Joined as ${playerName}`, 'success');
+        }
+
+        // Show choice input (multiple choice)
+        function showChoiceInput(data) {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const title = data.title || 'Make a choice';
+            const options = data.options || [];
+
+            let optionsHTML = '<div class="options-grid">';
+            options.forEach((option, index) => {
+                optionsHTML += `
+                    <button class="option-btn" onclick="selectOption('${option.replace(/'/g, "\\'")}')">
+                        <span>${option}</span>
+                    </button>
+                `;
+            });
+            optionsHTML += '</div>';
+
+            card.innerHTML = `
+                <h2 class="card-title">${title}</h2>
+                ${optionsHTML}
+            `;
+
+            gameArea.appendChild(card);
+        }
+
+        // Select option
+        function selectOption(value) {
+            ws.send(JSON.stringify({ type: 'response', value: value }));
+            gameArea.innerHTML = '<div class="card"><p style="text-align: center;">Processing... <span class="loading"></span></p></div>';
+            addConsoleMessage(`Selected: ${value}`);
+        }
+
+        // Show number input
+        function showNumberInput(data) {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const title = data.title || 'Enter a number';
+            const min = data.min || 1;
+            const max = data.max || 100;
+
+            card.innerHTML = `
+                <h2 class="card-title">${title}</h2>
+                <div class="input-form">
+                    <label class="input-label">Range: ${min} - ${max}</label>
+                    <input type="number" class="input-field" id="numberInput" 
+                           min="${min}" max="${max}" placeholder="Enter number" autofocus>
+                    <br><br>
+                    <button class="btn btn-primary" onclick="submitNumber(${min}, ${max})">
+                        <span>Submit</span>
+                    </button>
+                </div>
+            `;
+
+            gameArea.appendChild(card);
+
+            document.getElementById('numberInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') submitNumber(min, max);
+            });
+        }
+
+        // Submit number
+        function submitNumber(min, max) {
+            const input = document.getElementById('numberInput');
+            const value = parseInt(input.value);
+
+            if (isNaN(value)) {
+                addConsoleMessage('Please enter a valid number', 'error');
+                return;
+            }
+
+            if (value < min || value > max) {
+                addConsoleMessage(`Number must be between ${min} and ${max}`, 'error');
+                return;
+            }
+
+            ws.send(JSON.stringify({ type: 'response', value: value }));
+            gameArea.innerHTML = '<div class="card"><p style="text-align: center;">Processing... <span class="loading"></span></p></div>';
+            addConsoleMessage(`Submitted: ${value}`);
+        }
+
+        // Handle round start
+        function handleRoundStart(data) {
+            gameArea.innerHTML = '';
+            const roundCard = document.createElement('div');
+            roundCard.className = 'round-header';
+            roundCard.innerHTML = `
+                <div class="round-number">Round ${data.round} / ${data.total}</div>
+                <p style="margin-top: 1rem; color: var(--color-text-dim);">Roles are being assigned...</p>
+            `;
+            gameArea.appendChild(roundCard);
+            addConsoleMessage(`Round ${data.round} of ${data.total} starting...`, 'success');
+        }
+
+        // Handle role reveal
+        function handleRoleReveal(data) {
+            currentRole = data.role;
+
+            const roleCard = document.createElement('div');
+            roleCard.className = 'card role-card';
+
+            const roleClass = `role-${data.role.toLowerCase()}`;
+
+            roleCard.innerHTML = `
+                <h3 style="position: relative; z-index: 1; font-size: 1.2rem; color: var(--color-text-dim); text-transform: uppercase; letter-spacing: 0.2em;">Your Role</h3>
+                <div class="role-name ${roleClass}">${data.role}</div>
+                <p class="role-secret">Keep it secret!</p>
+            `;
+
+            gameArea.appendChild(roleCard);
+            addConsoleMessage(`You are the ${data.role}!`);
+        }
+
+        // Handle Sipahi turn
+        function handleSipahiTurn(data) {
+            addConsoleMessage(`${data.sipahi} is the Sipahi!`, 'success');
+
+            if (data.chor_options) {
+                addConsoleMessage(`Possible Chors: ${data.chor_options.join(', ')}`);
+            }
+        }
+
+        // Handle round end
+        function handleRoundEnd(data) {
+            gameArea.innerHTML = '';
+
+            const resultCard = document.createElement('div');
+            resultCard.className = 'card result-display';
+
+            const isCorrect = data.correct;
+            const icon = isCorrect ? '✅' : '❌';
+            const resultClass = isCorrect ? 'result-correct' : 'result-wrong';
+            const resultText = isCorrect ? 'Correct!' : 'Wrong!';
+            const message = isCorrect ? 'The Sipahi caught the Chor!' : 'The Chor escaped!';
+
+            resultCard.innerHTML = `
+                <div class="result-icon">${icon}</div>
+                <div class="result-text ${resultClass}">${resultText}</div>
+                <p style="font-size: 1.2rem; color: var(--color-text-dim);">${message}</p>
+            `;
+
+            gameArea.appendChild(resultCard);
+            addConsoleMessage(isCorrect ? '✅ Sipahi guessed correctly!' : '❌ Sipahi guessed wrong!', isCorrect ? 'success' : 'error');
+
+            // Show all roles
+            if (data.all_roles) {
+                const rolesCard = document.createElement('div');
+                rolesCard.className = 'card';
+                rolesCard.innerHTML = '<h2 class="card-title">Roles Revealed</h2><div class="roles-reveal" id="rolesReveal"></div>';
+                gameArea.appendChild(rolesCard);
+
+                const rolesContainer = document.getElementById('rolesReveal');
+                for (const [name, role] of Object.entries(data.all_roles)) {
+                    const roleClass = `role-${role.toLowerCase()}`;
+                    const roleItem = document.createElement('div');
+                    roleItem.className = 'role-reveal-item';
+                    roleItem.innerHTML = `
+                        <div class="role-reveal-name">${name}</div>
+                        <div class="role-reveal-role ${roleClass}">${role}</div>
+                    `;
+                    rolesContainer.appendChild(roleItem);
+
+                    addConsoleMessage(`${name}: ${role}`);
+                }
+            }
+
+            // Update scoreboard with score changes
+            if (data.scores) {
+                for (const [name, points] of Object.entries(data.scores)) {
+                    if (points > 0) {
+                        addConsoleMessage(`💰 ${name} earned ${points} points`);
+                    }
+                }
+            }
+        }
+
+        // Handle scoreboard - update live scoreboard in right panel
+        function handleScoreboard(data) {
+            if (data.scores) {
+                updateLiveScoreboard(data.scores);
+                addConsoleMessage('Scoreboard updated');
+            }
+        }
+
+        // Handle game over
+        function handleGameOver(data) {
+            gameEnded = true;
+            gameArea.innerHTML = '';
+
+            const gameOverCard = document.createElement('div');
+            gameOverCard.className = 'card';
+            gameOverCard.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <h2 class="card-title" style="font-size: 3rem; margin-bottom: 2rem;">🏆 Game Over!</h2>
+                    <div class="role-name role-raja" style="margin-bottom: 1rem;">
+                        ${data.winner} Wins!
+                    </div>
+                    <p style="font-size: 1.2rem; color: var(--color-text-dim); margin-bottom: 2rem;">
+                        Congratulations on the victory!
+                    </p>
+                </div>
+            `;
+            gameArea.appendChild(gameOverCard);
+
+            // Final scoreboard in game area
+            const finalCard = document.createElement('div');
+            finalCard.className = 'card';
+            finalCard.innerHTML = '<h2 class="card-title">Final Standings</h2><div id="finalScores"></div>';
+            gameArea.appendChild(finalCard);
+
+            const finalScoresDiv = document.getElementById('finalScores');
+            const scores = Object.entries(data.final_scores).sort((a, b) => b[1] - a[1]);
+
+            let scoresHTML = '<div style="display: grid; gap: 1rem; margin-top: 1rem;">';
+            scores.forEach(([name, score], index) => {
+                const isWinner = index === 0;
+                let medal = '';
+                if (index === 0) medal = '🥇';
+                else if (index === 1) medal = '🥈';
+                else if (index === 2) medal = '🥉';
+                else medal = `#${index + 1}`;
+
+                scoresHTML += `
+                    <div class="score-entry ${isWinner ? 'winner' : ''}" style="animation-delay: ${index * 0.1}s;">
+                        <span class="score-name">${medal} ${name}</span>
+                        <span class="score-value">${score}</span>
+                    </div>
+                `;
+            });
+            scoresHTML += '</div>';
+            finalScoresDiv.innerHTML = scoresHTML;
+
+            // Add New Game button
+            const newGameDiv = document.createElement('div');
+            newGameDiv.className = 'new-game-container';
+            newGameDiv.innerHTML = `
+                <button class="btn-new-game" onclick="startNewGame()">
+                    <span>🎮 Start New Game</span>
+                </button>
+                <p style="margin-top: 1rem; color: var(--color-text-dim); font-size: 0.9rem;">
+                    Click to refresh and start a new game
+                </p>
+            `;
+            gameArea.appendChild(newGameDiv);
+
+            // Update live scoreboard
+            updateLiveScoreboard(data.final_scores);
+
+            addConsoleMessage(`${data.winner} wins the game!`, 'success');
+            addConsoleMessage('Game finished! Click "Start New Game" to play again.');
+        }
+
+        // Start new game
+        function startNewGame() {
+            addConsoleMessage('Starting new game...', 'success');
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        }
+
+        // Initialize connection on load
+        window.addEventListener('DOMContentLoaded', () => {
+            connect();
+        });
+    </script>
+</body>
+
+</html>
